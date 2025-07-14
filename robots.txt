@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://cola-dragon.github.io/sitemap.xml
