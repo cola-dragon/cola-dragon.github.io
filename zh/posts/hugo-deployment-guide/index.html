@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>HUGO 博客部署实战：2026版全流程保姆级指南 | Cola Blog</title>
+<meta name="keywords" content="Hugo, GitHub Pages, GitHub Actions, 建站, CI/CD">
+<meta name="description" content="一篇真正完整、可操作的 Hugo 部署指南。从本地环境安装、主题配置、图片管理，到 GitHub Actions 自动化部署及自定义域名绑定，提供复制代码即用的配置模板。">
+<meta name="author" content="Cola">
+<link rel="canonical" href="https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.2211ca3164be7830024f6aad2b3a2e520843a64f8f048445c3401c1249aa051d.css" integrity="sha256-IhHKMWS&#43;eDACT2qtKzouUghDpk&#43;PBIRFw0AcEkmqBR0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://cola-dragon.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://cola-dragon.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://cola-dragon.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://cola-dragon.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://cola-dragon.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/">
+  <meta property="og:site_name" content="Cola Blog">
+  <meta property="og:title" content="HUGO 博客部署实战：2026版全流程保姆级指南">
+  <meta property="og:description" content="一篇真正完整、可操作的 Hugo 部署指南。从本地环境安装、主题配置、图片管理，到 GitHub Actions 自动化部署及自定义域名绑定，提供复制代码即用的配置模板。">
+  <meta property="og:locale" content="zh-cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-01-07T18:55:00+08:00">
+    <meta property="article:modified_time" content="2026-01-07T18:55:00+08:00">
+    <meta property="article:tag" content="Hugo">
+    <meta property="article:tag" content="GitHub Pages">
+    <meta property="article:tag" content="GitHub Actions">
+    <meta property="article:tag" content="建站">
+    <meta property="article:tag" content="CI/CD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HUGO 博客部署实战：2026版全流程保姆级指南">
+<meta name="twitter:description" content="一篇真正完整、可操作的 Hugo 部署指南。从本地环境安装、主题配置、图片管理，到 GitHub Actions 自动化部署及自定义域名绑定，提供复制代码即用的配置模板。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://cola-dragon.github.io/zh/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "HUGO 博客部署实战：2026版全流程保姆级指南",
+      "item": "https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HUGO 博客部署实战：2026版全流程保姆级指南",
+  "name": "HUGO 博客部署实战：2026版全流程保姆级指南",
+  "description": "一篇真正完整、可操作的 Hugo 部署指南。从本地环境安装、主题配置、图片管理，到 GitHub Actions 自动化部署及自定义域名绑定，提供复制代码即用的配置模板。",
+  "keywords": [
+    "Hugo", "GitHub Pages", "GitHub Actions", "建站", "CI/CD"
+  ],
+  "articleBody": "前言：为什么选择 Hugo + GitHub Pages？ 在众多的博客搭建方案中（WordPress, Hexo, VuePress…），Hugo 凭借其基于 Go 语言编写的强悍性能（毫秒级构建）脱颖而出。配合 GitHub Pages 的免费托管和 GitHub Actions 的自动化构建，我们可以实现一个零成本、高性能、自动化的现代化博客系统。\n这篇教程将带你从零开始，搭建并部署一个基于 PaperMod 主题的专业博客。\n第一阶段：本地环境准备 1. 安装 Hugo (Extended 版本) 现代主题（包括 PaperMod）通常需要处理 SCSS，必须安装 Extended 版本。\nmacOS (推荐 Homebrew): 1 brew install hugo Windows (推荐 Scoop): 1 scoop install hugo-extended 验证安装: 1 2 hugo version # 输出中应当包含 \"extended\" 字样 2. 初始化项目 打开终端，在你想存放博客的目录执行：\n1 2 3 4 5 6 7 8 # 1. 创建新站点 hugo new site my-blog -f yml # 2. 进入目录 cd my-blog # 3. 初始化 Git 仓库 (重要一步) git init 第二阶段：主题安装与配置 (PaperMod) 我们将使用 Git Submodule (子模块) 来管理主题，这是最稳定的方式，避免了部署时主题文件变空的问题。\n1. 安装主题 1 git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod 2. 核心配置 (config.yml) 直接复制以下内容覆盖根目录的 config.yml。这是经过生产环境验证的配置模板。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 baseURL: \"https://\u003c你的Github用户名\u003e.github.io/\" # 部署前一定要改这里！ languageCode: zh-cn title: 我的博客 theme: PaperMod # 1. 必填：日期格式修正 # Hugo 使用 Go 的参考时间 (2006-01-02)，填错会导致日期乱码 params: DateFormat: \"2006-01-02\" defaultTheme: auto # 自动跟随系统深色模式 # 2. 优化：生成永久链接 # 让文章链接变成 /posts/hello-world/ 而不是 /posts/hello-world.html permalinks: posts: /:filename/ # 3. 启用 HTML 渲染 (如果你要在 Markdown 里写 HTML) markup: goldmark: renderer: unsafe: true 第三阶段：内容创作规范 1. 创建文章 不要手动新建文件，使用命令可自动生成标准头信息：\n1 hugo new posts/hello-world.md 2. 文章头信息 (Front Matter) 详解 打开生成的文件，你会看到如下内容：\n1 2 3 4 5 6 7 8 9 +++ title = 'Hello World' date = 2026-01-07T19:00:00+08:00 draft = true # ⚠️ 注意：草稿状态下，部署后不会显示！发布前改为 false tags = [\"生活\", \"随笔\"] categories = [\"日记\"] +++ 这里开始写正文... 3. 图片管理 (最佳实践) Hugo 的静态资源存放在 static 目录。\n在 static 下新建目录：static/images。 将图片 a.png 放入该文件夹。 在文章中引用（注意：引用时不需要写 static）： 1 ![图片描述](/images/a.png) 第四阶段：自动化部署 (GitHub Actions) 这是最核心的部分。我们将配置一套流水线：当你提交代码时，GitHub 自动帮你构建网站并发布。\n1. 准备目录结构 在博客根目录创建文件夹：\n1 mkdir -p .github/workflows 2. 创建工作流文件 新建文件 .github/workflows/deploy.yml，填入以下内容：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 name: Deploy Hugo Site on: # 监听 main 分支的 push 事件 push: branches: - main # 允许在 Actions 页面手动触发 workflow_dispatch: # 设置 GITHUB_TOKEN 的权限 permissions: contents: read pages: write id-token: write # 允许一个并发部署 concurrency: group: \"pages\" cancel-in-progress: true jobs: # 构建任务 build: runs-on: ubuntu-latest steps: - name: 拉取代码 uses: actions/checkout@v4 with: submodules: true # ⭐ 必须开启，否则主题下载失败 fetch-depth: 0 # ⭐ 必须开启，否则文章修改时间不准确 - name: 安装 Hugo uses: peaceiris/actions-hugo@v3 with: hugo-version: 'latest' extended: true - name: 构建网站 run: hugo --minify - name: 上传构建产物 uses: actions/upload-pages-artifact@v3 with: path: ./public # 部署任务 deploy: environment: name: github-pages url: ${{ steps.deployment.outputs.page_url }} runs-on: ubuntu-latest needs: build steps: - name: 发布到 GitHub Pages id: deployment uses: actions/deploy-pages@v4 第五阶段：推送到 GitHub 并上线 1. 在 GitHub 创建仓库 创建一个新仓库，仓库名分两种情况：\n个人主页: 仓库名必须是 \u003c用户名\u003e.github.io (例如 cola-dragon.github.io) 项目主页: 任意名称 (例如 my-blog)，以后访问地址是 用户.github.io/my-blog/ 2. 推送代码 1 2 3 4 5 git add . git commit -m \"init: 博客初始化\" git branch -M main git remote add origin https://github.com/\u003c用户名\u003e/\u003c仓库名\u003e.git git push -u origin main 3. 开启 GitHub Pages 进入仓库 Settings -\u003e Pages。 Source 选择 GitHub Actions (这一步至关重要！)。 等待 Actions 跑完（约 1 分钟），页面上会出现你的博客网址。 进阶：常见问题自救指南 Q1: 部署后样式全乱，加载不出该 CSS？ 原因: config.yml 里的 baseURL 填错了。 解决:\n如果是 \u003c用户名\u003e.github.io 仓库，baseURL 填 https://\u003c用户名\u003e.github.io/ 如果是 my-blog 仓库，baseURL 填 https://\u003c用户名\u003e.github.io/my-blog/ 注意: 必须以 / 结尾。 Q2: 报错 “Process validation failed”? 原因: Hugo 版本过低，不支持主题的新特性。 解决: 确保本地安装了 hugo-extended，且 deploy.yml 中 extended: true 已开启。\nQ3: 本地运行正常，线上文章 404？ 原因: 因为 Hugo 默认不发布 draft: true 的文章，或者发布日期在未来。 解决: 检查 Markdown 头部，将 draft 改为 false，并确认 date 是过去的时间。\n结语 至此，你已经拥有了一个完全属于自己的、现代化的独立博客。它不需要你维护服务器，不需要支付费用，只需要关注你最核心的价值——内容创作。\n祝笔耕不辍！\n",
+  "wordCount" : "1922",
+  "inLanguage": "zh",
+  "datePublished": "2026-01-07T18:55:00+08:00",
+  "dateModified": "2026-01-07T18:55:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Cola"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cola Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cola-dragon.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://cola-dragon.github.io/zh/" accesskey="h" title="Cola Blog (Alt + H)">Cola Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://cola-dragon.github.io/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://cola-dragon.github.io/zh/tags" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://cola-dragon.github.io/zh/">主页</a>&nbsp;»&nbsp;<a href="https://cola-dragon.github.io/zh/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      HUGO 博客部署实战：2026版全流程保姆级指南
+    </h1>
+    <div class="post-meta"><span title='2026-01-07 18:55:00 +0800 +0800'>2026-01-07</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;Cola
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%89%8d%e8%a8%80%e4%b8%ba%e4%bb%80%e4%b9%88%e9%80%89%e6%8b%a9-hugo--github-pages" aria-label="前言：为什么选择 Hugo &#43; GitHub Pages？">前言：为什么选择 Hugo + GitHub Pages？</a></li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%b8%80%e9%98%b6%e6%ae%b5%e6%9c%ac%e5%9c%b0%e7%8e%af%e5%a2%83%e5%87%86%e5%a4%87" aria-label="第一阶段：本地环境准备">第一阶段：本地环境准备</a><ul>
+                        
+                <li>
+                    <a href="#1-%e5%ae%89%e8%a3%85-hugo-extended-%e7%89%88%e6%9c%ac" aria-label="1. 安装 Hugo (Extended 版本)">1. 安装 Hugo (Extended 版本)</a></li>
+                <li>
+                    <a href="#2-%e5%88%9d%e5%a7%8b%e5%8c%96%e9%a1%b9%e7%9b%ae" aria-label="2. 初始化项目">2. 初始化项目</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%ba%8c%e9%98%b6%e6%ae%b5%e4%b8%bb%e9%a2%98%e5%ae%89%e8%a3%85%e4%b8%8e%e9%85%8d%e7%bd%ae-papermod" aria-label="第二阶段：主题安装与配置 (PaperMod)">第二阶段：主题安装与配置 (PaperMod)</a><ul>
+                        
+                <li>
+                    <a href="#1-%e5%ae%89%e8%a3%85%e4%b8%bb%e9%a2%98" aria-label="1. 安装主题">1. 安装主题</a></li>
+                <li>
+                    <a href="#2-%e6%a0%b8%e5%bf%83%e9%85%8d%e7%bd%ae-configyml" aria-label="2. 核心配置 (config.yml)">2. 核心配置 (config.yml)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%b8%89%e9%98%b6%e6%ae%b5%e5%86%85%e5%ae%b9%e5%88%9b%e4%bd%9c%e8%a7%84%e8%8c%83" aria-label="第三阶段：内容创作规范">第三阶段：内容创作规范</a><ul>
+                        
+                <li>
+                    <a href="#1-%e5%88%9b%e5%bb%ba%e6%96%87%e7%ab%a0" aria-label="1. 创建文章">1. 创建文章</a></li>
+                <li>
+                    <a href="#2-%e6%96%87%e7%ab%a0%e5%a4%b4%e4%bf%a1%e6%81%af-front-matter-%e8%af%a6%e8%a7%a3" aria-label="2. 文章头信息 (Front Matter) 详解">2. 文章头信息 (Front Matter) 详解</a></li>
+                <li>
+                    <a href="#3-%e5%9b%be%e7%89%87%e7%ae%a1%e7%90%86-%e6%9c%80%e4%bd%b3%e5%ae%9e%e8%b7%b5" aria-label="3. 图片管理 (最佳实践)">3. 图片管理 (最佳实践)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%ac%ac%e5%9b%9b%e9%98%b6%e6%ae%b5%e8%87%aa%e5%8a%a8%e5%8c%96%e9%83%a8%e7%bd%b2-github-actions" aria-label="第四阶段：自动化部署 (GitHub Actions)">第四阶段：自动化部署 (GitHub Actions)</a><ul>
+                        
+                <li>
+                    <a href="#1-%e5%87%86%e5%a4%87%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84" aria-label="1. 准备目录结构">1. 准备目录结构</a></li>
+                <li>
+                    <a href="#2-%e5%88%9b%e5%bb%ba%e5%b7%a5%e4%bd%9c%e6%b5%81%e6%96%87%e4%bb%b6" aria-label="2. 创建工作流文件">2. 创建工作流文件</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%ac%ac%e4%ba%94%e9%98%b6%e6%ae%b5%e6%8e%a8%e9%80%81%e5%88%b0-github-%e5%b9%b6%e4%b8%8a%e7%ba%bf" aria-label="第五阶段：推送到 GitHub 并上线">第五阶段：推送到 GitHub 并上线</a><ul>
+                        
+                <li>
+                    <a href="#1-%e5%9c%a8-github-%e5%88%9b%e5%bb%ba%e4%bb%93%e5%ba%93" aria-label="1. 在 GitHub 创建仓库">1. 在 GitHub 创建仓库</a></li>
+                <li>
+                    <a href="#2-%e6%8e%a8%e9%80%81%e4%bb%a3%e7%a0%81" aria-label="2. 推送代码">2. 推送代码</a></li>
+                <li>
+                    <a href="#3-%e5%bc%80%e5%90%af-github-pages" aria-label="3. 开启 GitHub Pages">3. 开启 GitHub Pages</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e8%bf%9b%e9%98%b6%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98%e8%87%aa%e6%95%91%e6%8c%87%e5%8d%97" aria-label="进阶：常见问题自救指南">进阶：常见问题自救指南</a><ul>
+                        
+                <li>
+                    <a href="#q1-%e9%83%a8%e7%bd%b2%e5%90%8e%e6%a0%b7%e5%bc%8f%e5%85%a8%e4%b9%b1%e5%8a%a0%e8%bd%bd%e4%b8%8d%e5%87%ba%e8%af%a5-css" aria-label="Q1: 部署后样式全乱，加载不出该 CSS？">Q1: 部署后样式全乱，加载不出该 CSS？</a></li>
+                <li>
+                    <a href="#q2-%e6%8a%a5%e9%94%99-process-validation-failed" aria-label="Q2: 报错 &ldquo;Process validation failed&rdquo;?">Q2: 报错 &ldquo;Process validation failed&rdquo;?</a></li>
+                <li>
+                    <a href="#q3-%e6%9c%ac%e5%9c%b0%e8%bf%90%e8%a1%8c%e6%ad%a3%e5%b8%b8%e7%ba%bf%e4%b8%8a%e6%96%87%e7%ab%a0-404" aria-label="Q3: 本地运行正常，线上文章 404？">Q3: 本地运行正常，线上文章 404？</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%bb%93%e8%af%ad" aria-label="结语">结语</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="前言为什么选择-hugo--github-pages">前言：为什么选择 Hugo + GitHub Pages？<a hidden class="anchor" aria-hidden="true" href="#前言为什么选择-hugo--github-pages">#</a></h2>
+<p>在众多的博客搭建方案中（WordPress, Hexo, VuePress&hellip;），<strong>Hugo</strong> 凭借其基于 Go 语言编写的强悍性能（毫秒级构建）脱颖而出。配合 <strong>GitHub Pages</strong> 的免费托管和 <strong>GitHub Actions</strong> 的自动化构建，我们可以实现一个<strong>零成本、高性能、自动化</strong>的现代化博客系统。</p>
+<p>这篇教程将带你从零开始，搭建并部署一个基于 <code>PaperMod</code> 主题的专业博客。</p>
+<hr>
+<h2 id="第一阶段本地环境准备">第一阶段：本地环境准备<a hidden class="anchor" aria-hidden="true" href="#第一阶段本地环境准备">#</a></h2>
+<h3 id="1-安装-hugo-extended-版本">1. 安装 Hugo (Extended 版本)<a hidden class="anchor" aria-hidden="true" href="#1-安装-hugo-extended-版本">#</a></h3>
+<p>现代主题（包括 PaperMod）通常需要处理 SCSS，必须安装 <strong>Extended</strong> 版本。</p>
+<ul>
+<li><strong>macOS (推荐 Homebrew)</strong>:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>Windows (推荐 Scoop)</strong>:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="n">scoop</span> <span class="n">install</span> <span class="nb">hugo-extended</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>验证安装</strong>:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo version
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出中应当包含 &#34;extended&#34; 字样</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="2-初始化项目">2. 初始化项目<a hidden class="anchor" aria-hidden="true" href="#2-初始化项目">#</a></h3>
+<p>打开终端，在你想存放博客的目录执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. 创建新站点</span>
+</span></span><span class="line"><span class="cl">hugo new site my-blog -f yml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 进入目录</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> my-blog
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 初始化 Git 仓库 (重要一步)</span>
+</span></span><span class="line"><span class="cl">git init
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="第二阶段主题安装与配置-papermod">第二阶段：主题安装与配置 (PaperMod)<a hidden class="anchor" aria-hidden="true" href="#第二阶段主题安装与配置-papermod">#</a></h2>
+<p>我们将使用 Git Submodule (子模块) 来管理主题，这是<strong>最稳定</strong>的方式，避免了部署时主题文件变空的问题。</p>
+<h3 id="1-安装主题">1. 安装主题<a hidden class="anchor" aria-hidden="true" href="#1-安装主题">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-核心配置-configyml">2. 核心配置 (config.yml)<a hidden class="anchor" aria-hidden="true" href="#2-核心配置-configyml">#</a></h3>
+<p>直接复制以下内容覆盖根目录的 <code>config.yml</code>。这是经过生产环境验证的配置模板。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">baseURL</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;https://&lt;你的Github用户名&gt;.github.io/&#34;</span><span class="w">  </span><span class="c"># 部署前一定要改这里！</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">languageCode</span><span class="p">:</span><span class="w"> </span><span class="l">zh-cn</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l">我的博客</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">theme</span><span class="p">:</span><span class="w"> </span><span class="l">PaperMod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># 1. 必填：日期格式修正</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># Hugo 使用 Go 的参考时间 (2006-01-02)，填错会导致日期乱码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">params</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">DateFormat</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2006-01-02&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">defaultTheme</span><span class="p">:</span><span class="w"> </span><span class="l">auto</span><span class="w"> </span><span class="c"># 自动跟随系统深色模式</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># 2. 优化：生成永久链接</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># 让文章链接变成 /posts/hello-world/ 而不是 /posts/hello-world.html</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">permalinks</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">posts</span><span class="p">:</span><span class="w"> </span><span class="l">/:filename/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># 3. 启用 HTML 渲染 (如果你要在 Markdown 里写 HTML)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">markup</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">goldmark</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">unsafe</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="第三阶段内容创作规范">第三阶段：内容创作规范<a hidden class="anchor" aria-hidden="true" href="#第三阶段内容创作规范">#</a></h2>
+<h3 id="1-创建文章">1. 创建文章<a hidden class="anchor" aria-hidden="true" href="#1-创建文章">#</a></h3>
+<p>不要手动新建文件，使用命令可自动生成标准头信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new posts/hello-world.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-文章头信息-front-matter-详解">2. 文章头信息 (Front Matter) 详解<a hidden class="anchor" aria-hidden="true" href="#2-文章头信息-front-matter-详解">#</a></h3>
+<p>打开生成的文件，你会看到如下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl">title = &#39;Hello World&#39;
+</span></span><span class="line"><span class="cl">date = 2026-01-07T19:00:00+08:00
+</span></span><span class="line"><span class="cl">draft = true  # ⚠️ 注意：草稿状态下，部署后不会显示！发布前改为 false
+</span></span><span class="line"><span class="cl">tags = [&#34;生活&#34;, &#34;随笔&#34;]
+</span></span><span class="line"><span class="cl">categories = [&#34;日记&#34;]
+</span></span><span class="line"><span class="cl">+++
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">这里开始写正文...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-图片管理-最佳实践">3. 图片管理 (最佳实践)<a hidden class="anchor" aria-hidden="true" href="#3-图片管理-最佳实践">#</a></h3>
+<p>Hugo 的静态资源存放在 <code>static</code> 目录。</p>
+<ol>
+<li>在 static 下新建目录：<code>static/images</code>。</li>
+<li>将图片 <code>a.png</code> 放入该文件夹。</li>
+<li>在文章中引用（<strong>注意：引用时不需要写 static</strong>）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">![<span class="nt">图片描述</span>](<span class="na">/images/a.png</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<hr>
+<h2 id="第四阶段自动化部署-github-actions">第四阶段：自动化部署 (GitHub Actions)<a hidden class="anchor" aria-hidden="true" href="#第四阶段自动化部署-github-actions">#</a></h2>
+<p>这是最核心的部分。我们将配置一套流水线：<strong>当你提交代码时，GitHub 自动帮你构建网站并发布</strong>。</p>
+<h3 id="1-准备目录结构">1. 准备目录结构<a hidden class="anchor" aria-hidden="true" href="#1-准备目录结构">#</a></h3>
+<p>在博客根目录创建文件夹：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p .github/workflows
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-创建工作流文件">2. 创建工作流文件<a hidden class="anchor" aria-hidden="true" href="#2-创建工作流文件">#</a></h3>
+<p>新建文件 <code>.github/workflows/deploy.yml</code>，填入以下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Hugo Site</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 监听 main 分支的 push 事件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 允许在 Actions 页面手动触发</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># 设置 GITHUB_TOKEN 的权限</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">permissions</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l">read</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pages</span><span class="p">:</span><span class="w"> </span><span class="l">write</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">id-token</span><span class="p">:</span><span class="w"> </span><span class="l">write</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># 允许一个并发部署</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">concurrency</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;pages&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">cancel-in-progress</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 构建任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">拉取代码</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c"># ⭐ 必须开启，否则主题下载失败</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c"># ⭐ 必须开启，否则文章修改时间不准确</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">安装 Hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">extended</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">构建网站</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo --minify</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">上传构建产物</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/upload-pages-artifact@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># 部署任务</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">github-pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l">${{ steps.deployment.outputs.page_url }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l">build</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">发布到 GitHub Pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/deploy-pages@v4</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="第五阶段推送到-github-并上线">第五阶段：推送到 GitHub 并上线<a hidden class="anchor" aria-hidden="true" href="#第五阶段推送到-github-并上线">#</a></h2>
+<h3 id="1-在-github-创建仓库">1. 在 GitHub 创建仓库<a hidden class="anchor" aria-hidden="true" href="#1-在-github-创建仓库">#</a></h3>
+<p>创建一个新仓库，仓库名分两种情况：</p>
+<ul>
+<li><strong>个人主页</strong>: 仓库名必须是 <code>&lt;用户名&gt;.github.io</code> (例如 <code>cola-dragon.github.io</code>)</li>
+<li><strong>项目主页</strong>: 任意名称 (例如 <code>my-blog</code>)，以后访问地址是 <code>用户.github.io/my-blog/</code></li>
+</ul>
+<h3 id="2-推送代码">2. 推送代码<a hidden class="anchor" aria-hidden="true" href="#2-推送代码">#</a></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;init: 博客初始化&#34;</span>
+</span></span><span class="line"><span class="cl">git branch -M main
+</span></span><span class="line"><span class="cl">git remote add origin https://github.com/&lt;用户名&gt;/&lt;仓库名&gt;.git
+</span></span><span class="line"><span class="cl">git push -u origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="3-开启-github-pages">3. 开启 GitHub Pages<a hidden class="anchor" aria-hidden="true" href="#3-开启-github-pages">#</a></h3>
+<ol>
+<li>进入仓库 <strong>Settings</strong> -&gt; <strong>Pages</strong>。</li>
+<li><strong>Source</strong> 选择 <strong>GitHub Actions</strong> (这一步至关重要！)。</li>
+<li>等待 Actions 跑完（约 1 分钟），页面上会出现你的博客网址。</li>
+</ol>
+<hr>
+<h2 id="进阶常见问题自救指南">进阶：常见问题自救指南<a hidden class="anchor" aria-hidden="true" href="#进阶常见问题自救指南">#</a></h2>
+<h3 id="q1-部署后样式全乱加载不出该-css">Q1: 部署后样式全乱，加载不出该 CSS？<a hidden class="anchor" aria-hidden="true" href="#q1-部署后样式全乱加载不出该-css">#</a></h3>
+<p><strong>原因</strong>: <code>config.yml</code> 里的 <code>baseURL</code> 填错了。
+<strong>解决</strong>:</p>
+<ul>
+<li>如果是 <code>&lt;用户名&gt;.github.io</code> 仓库，baseURL 填 <code>https://&lt;用户名&gt;.github.io/</code></li>
+<li>如果是 <code>my-blog</code> 仓库，baseURL 填 <code>https://&lt;用户名&gt;.github.io/my-blog/</code></li>
+<li><strong>注意</strong>: 必须以 <code>/</code> 结尾。</li>
+</ul>
+<h3 id="q2-报错-process-validation-failed">Q2: 报错 &ldquo;Process validation failed&rdquo;?<a hidden class="anchor" aria-hidden="true" href="#q2-报错-process-validation-failed">#</a></h3>
+<p><strong>原因</strong>: Hugo 版本过低，不支持主题的新特性。
+<strong>解决</strong>: 确保本地安装了 <code>hugo-extended</code>，且 <code>deploy.yml</code> 中 <code>extended: true</code> 已开启。</p>
+<h3 id="q3-本地运行正常线上文章-404">Q3: 本地运行正常，线上文章 404？<a hidden class="anchor" aria-hidden="true" href="#q3-本地运行正常线上文章-404">#</a></h3>
+<p><strong>原因</strong>: 因为 Hugo 默认不发布 <code>draft: true</code> 的文章，或者发布日期在未来。
+<strong>解决</strong>: 检查 Markdown 头部，将 <code>draft</code> 改为 <code>false</code>，并确认 <code>date</code> 是过去的时间。</p>
+<hr>
+<h2 id="结语">结语<a hidden class="anchor" aria-hidden="true" href="#结语">#</a></h2>
+<p>至此，你已经拥有了一个完全属于自己的、现代化的独立博客。它不需要你维护服务器，不需要支付费用，只需要关注你最核心的价值——<strong>内容创作</strong>。</p>
+<p>祝笔耕不辍！</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://cola-dragon.github.io/zh/tags/hugo/">Hugo</a></li>
+      <li><a href="https://cola-dragon.github.io/zh/tags/github-pages/">GitHub Pages</a></li>
+      <li><a href="https://cola-dragon.github.io/zh/tags/github-actions/">GitHub Actions</a></li>
+      <li><a href="https://cola-dragon.github.io/zh/tags/%E5%BB%BA%E7%AB%99/">建站</a></li>
+      <li><a href="https://cola-dragon.github.io/zh/tags/ci/cd/">CI/CD</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://cola-dragon.github.io/zh/posts/my-first-post/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>这是我的第一篇文章</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on x"
+            href="https://x.com/intent/tweet/?text=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97&amp;url=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f&amp;hashtags=Hugo%2cGitHubPages%2cGitHubActions%2c%e5%bb%ba%e7%ab%99%2cCI%2fCD">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f&amp;title=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97&amp;summary=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97&amp;source=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f&title=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on whatsapp"
+            href="https://api.whatsapp.com/send?text=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97%20-%20https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on telegram"
+            href="https://telegram.me/share/url?text=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97&amp;url=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share HUGO 博客部署实战：2026版全流程保姆级指南 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=HUGO%20%e5%8d%9a%e5%ae%a2%e9%83%a8%e7%bd%b2%e5%ae%9e%e6%88%98%ef%bc%9a2026%e7%89%88%e5%85%a8%e6%b5%81%e7%a8%8b%e4%bf%9d%e5%a7%86%e7%ba%a7%e6%8c%87%e5%8d%97&u=https%3a%2f%2fcola-dragon.github.io%2fzh%2fposts%2fhugo-deployment-guide%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://cola-dragon.github.io/zh/">Cola Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

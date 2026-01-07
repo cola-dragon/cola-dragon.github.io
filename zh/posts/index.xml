@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Cola Blog</description>
     <generator>Hugo -- 0.154.3</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 07 Jan 2026 14:39:55 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 07 Jan 2026 18:55:00 +0800</lastBuildDate>
     <atom:link href="https://cola-dragon.github.io/zh/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HUGO 博客部署实战：2026版全流程保姆级指南</title>
+      <link>https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/</link>
+      <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
+      <guid>https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/</guid>
+      <description>一篇真正完整、可操作的 Hugo 部署指南。从本地环境安装、主题配置、图片管理，到 GitHub Actions 自动化部署及自定义域名绑定，提供复制代码即用的配置模板。</description>
+    </item>
     <item>
       <title>这是我的第一篇文章</title>
       <link>https://cola-dragon.github.io/zh/posts/my-first-post/</link>

@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Cola Blog</title>
-    <link>https://cola-dragon.github.io/zh/</link>
-    <description>Recent content on Cola Blog</description>
+    <title>建站 on Cola Blog</title>
+    <link>https://cola-dragon.github.io/zh/tags/%E5%BB%BA%E7%AB%99/</link>
+    <description>Recent content in 建站 on Cola Blog</description>
     <generator>Hugo -- 0.154.3</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 07 Jan 2026 18:55:00 +0800</lastBuildDate>
-    <atom:link href="https://cola-dragon.github.io/zh/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://cola-dragon.github.io/zh/tags/%E5%BB%BA%E7%AB%99/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HUGO 博客部署实战：2026版全流程保姆级指南</title>
       <link>https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/</link>
       <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
       <guid>https://cola-dragon.github.io/zh/posts/hugo-deployment-guide/</guid>
       <description>一篇真正完整、可操作的 Hugo 部署指南。从本地环境安装、主题配置、图片管理，到 GitHub Actions 自动化部署及自定义域名绑定，提供复制代码即用的配置模板。</description>
-    </item>
-    <item>
-      <title>这是我的第一篇文章</title>
-      <link>https://cola-dragon.github.io/zh/posts/my-first-post/</link>
-      <pubDate>Wed, 07 Jan 2026 14:39:55 +0800</pubDate>
-      <guid>https://cola-dragon.github.io/zh/posts/my-first-post/</guid>
-      <description>&lt;p&gt;## 简介 这是 &lt;strong&gt;粗体&lt;/strong&gt; 文本，&lt;/p&gt;
-&lt;p&gt;这是 &lt;em&gt;斜体&lt;/em&gt; 文本。&lt;/p&gt;
-&lt;p&gt;访问 &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; 网站！&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

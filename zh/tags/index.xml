@@ -6,6 +6,42 @@
     <description>Recent content in Tags on Cola Blog</description>
     <generator>Hugo -- 0.154.3</generator>
     <language>zh-cn</language>
+    <lastBuildDate>Wed, 07 Jan 2026 18:55:00 +0800</lastBuildDate>
     <atom:link href="https://cola-dragon.github.io/zh/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CI/CD</title>
+      <link>https://cola-dragon.github.io/zh/tags/ci/cd/</link>
+      <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
+      <guid>https://cola-dragon.github.io/zh/tags/ci/cd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GitHub Actions</title>
+      <link>https://cola-dragon.github.io/zh/tags/github-actions/</link>
+      <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
+      <guid>https://cola-dragon.github.io/zh/tags/github-actions/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GitHub Pages</title>
+      <link>https://cola-dragon.github.io/zh/tags/github-pages/</link>
+      <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
+      <guid>https://cola-dragon.github.io/zh/tags/github-pages/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>https://cola-dragon.github.io/zh/tags/hugo/</link>
+      <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
+      <guid>https://cola-dragon.github.io/zh/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>建站</title>
+      <link>https://cola-dragon.github.io/zh/tags/%E5%BB%BA%E7%AB%99/</link>
+      <pubDate>Wed, 07 Jan 2026 18:55:00 +0800</pubDate>
+      <guid>https://cola-dragon.github.io/zh/tags/%E5%BB%BA%E7%AB%99/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
